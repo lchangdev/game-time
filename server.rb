@@ -103,16 +103,16 @@ def wins_loss
 
   total_wl_data
 
-  #sorting hash
-
   sorted_teams = {}
   total_wl_data.each do |k,v|
-        binding.pry
-  sorted_teams[k[0][:wins + :losses]]
+
+  total = v[0][:wins] + v[0][:losses]
+  sorted_teams[total] = [k,v]
 
   end
 
-
+  leaderboard_sorted = sorted_teams.sort_by {|k,v| k}.reverse
+  Hash[leaderboard_sorted]
 
 end
 
