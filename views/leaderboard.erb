@@ -9,6 +9,9 @@
 
 <body>
   <h1>Leader Board</h1>
+  <p><%= @entire_data %></p>
+  <p><%= @leaderboard_data %></p>
+  <p><%= @practice_data %></p>
   <table>
     <thead>
       <tr>
@@ -18,9 +21,14 @@
       </tr>
     </thead>
     <tbody>
+      <% @practice_data.each do |k,v| %>
       <tr>
-        <td><%= @leaderboard_data %></td>
+        <td><%= k %></td>
+
+        <td><%= v[0][:wins] %></td>
+        <td><%= v[0][:losses].abs %></td>
       </tr>
+      <% end %>
     </tbody>
   </table>
 </body>
