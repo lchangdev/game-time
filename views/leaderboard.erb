@@ -23,7 +23,10 @@
     <tbody>
       <% @leaderboard_data.each do |k,v| %>
       <tr>
-        <td><%= v[0] %></td>
+        <td>
+          <a href="<%= url("/leaderboard/#{v[0]}") %>">
+          <%= v[0] %>
+        </td>
         <td><%= v[1][0][:wins] %></td>
         <td><%= v[1][0][:losses].abs %></td>
       </tr>

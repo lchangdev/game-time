@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Game Time</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h3>Team Profile: <span><%= params[:team] %></span><h3>
+  <table>
+
+    <thead>
+      <tr>
+        <th>Wins</th>
+        <th>Loss</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @leaderboard_data.each do |k,v| %>
+        <% if v[0] == params[:team] %>
+          <tr>
+            <td><%= v[1][0][:wins] %></td>
+            <td><%= v[1][0][:losses].abs %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+
+    <thead>
+      <tr>
+        <th>Home Team</th>
+        <th>Away Team</th>
+        <th>Home Score</th>
+        <th>Away Score</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @entire_data.each do |x| %>
+        <%if x["home_team"] == params[:team] || x["away_team"] == params[:team] %>
+          <tr>
+            <td><%= x["home_team"] %></td>
+            <td><%= x["away_team"] %></td>
+            <td><%= x["home_score"] %></td>
+            <td><%= x["away_score"] %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+
+  </table>
+</body>
+</html>

@@ -13,8 +13,19 @@ def load_data
 
 end
 
+def team_data
+  team_name = []
 
-def wins_loss
+  CSV.foreach('team_names.csv', headers: true, converters: :all) do |row|
+  team_name << row.to_hash
+  end
+
+  team_name
+
+
+end
+
+def wins_loss_data
 
   total_data = []
   teams_data = []
@@ -22,7 +33,8 @@ def wins_loss
   total_wl_data = {}
 
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
-    total_data << row
+    total_data << row.to_hash
+
   end
 
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
@@ -106,11 +118,24 @@ end
 get '/leaderboard' do
 
   @entire_data = load_data
-  @leaderboard_data = wins_loss
+  @leaderboard_data = wins_loss_data
 
   erb :leaderboard
 end
 
+get '/leaderboard/:team' do
+  @entire_data = load_data
+  @team_names_data = team_data
+  @leaderboard_data = wins_loss_data
+
+  @team_info = @team_names_data.find do |team|
+
+    team[:team_name] == params[:team]
+
+  end
+
+  erb :teamprofile
+end
 
 
 
