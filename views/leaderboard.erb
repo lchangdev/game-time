@@ -11,7 +11,7 @@
   <h1>Leader Board</h1>
   <p><%= @entire_data %></p>
 
-  <p><%= @practice_data %></p>
+  <p><%= @leaderboard_data %></p>
   <table>
     <thead>
       <tr>
@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @practice_data.each do |k,v| %>
+      <% @leaderboard_data.each do |k,v| %>
       <tr>
         <td><%= v[0] %></td>
         <td><%= v[1][0][:wins] %></td>

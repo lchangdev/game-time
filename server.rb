@@ -13,30 +13,12 @@ def load_data
 
 end
 
-def team_data
-  teams_data = []
-  wins_loss_data ={}
-  total_wl_data = {}
-
-  CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
-  teams_data << row["home_team"]
-  teams_data << row["away_team"]
-  end
-
-  teams = teams_data.uniq
-  teams.each do |team|
-    wins_loss_data[team] = [wins: 0,losses: 0]
-  end
-
-  total_wl_data = wins_loss_data
-
-end
 
 def wins_loss
 
   total_data = []
   teams_data = []
-  wins_loss_data ={}
+  wl_data ={}
   total_wl_data = {}
 
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
@@ -50,10 +32,10 @@ def wins_loss
 
   teams = teams_data.uniq
   teams.each do |team|
-    wins_loss_data[team] = [wins: 0,losses: 0]
+    wl_data[team] = [wins: 0,losses: 0]
   end
 
-  total_wl_data = wins_loss_data
+  total_wl_data = wl_data
 
   total_data.each do |x|
 
@@ -116,9 +98,6 @@ def wins_loss
 
 end
 
-
-
-
 get '/' do
 
   erb :index
@@ -126,28 +105,27 @@ end
 
 get '/leaderboard' do
 
-
   @entire_data = load_data
-  @leaderboard_data = team_data
-  @practice_data = wins_loss
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @leaderboard_data = wins_loss
 
   erb :leaderboard
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
