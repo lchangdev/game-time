@@ -10,14 +10,12 @@
 <body>
   <h3>Team Profile: <span><%= params[:team] %></span><h3>
   <table>
-
     <thead>
       <tr>
         <th>Wins</th>
         <th>Loss</th>
       </tr>
     </thead>
-
     <tbody>
       <% @leaderboard_data.each do |k,v| %>
         <% if v[0] == params[:team] %>
@@ -28,7 +26,6 @@
         <% end %>
       <% end %>
     </tbody>
-
     <thead>
       <tr>
         <th>Home Team</th>
@@ -37,7 +34,6 @@
         <th>Away Score</th>
       </tr>
     </thead>
-
     <tbody>
       <% @entire_data.each do |x| %>
         <%if x["home_team"] == params[:team] || x["away_team"] == params[:team] %>
@@ -50,7 +46,6 @@
         <% end %>
       <% end %>
     </tbody>
-
   </table>
 </body>
 </html>

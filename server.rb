@@ -3,30 +3,25 @@ require 'csv'
 require 'shotgun'
 require 'pry'
 
+# Methods
+
 def load_data
   master_data = []
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
     master_data << row.to_hash
   end
-
   master_data
-
 end
 
 def team_data
   team_name = []
-
   CSV.foreach('team_names.csv', headers: true, converters: :all) do |row|
   team_name << row.to_hash
   end
-
   team_name
-
-
 end
 
 def wins_loss_data
-
   total_data = []
   teams_data = []
   wl_data ={}
@@ -34,7 +29,6 @@ def wins_loss_data
 
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
     total_data << row.to_hash
-
   end
 
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
@@ -50,7 +44,6 @@ def wins_loss_data
   total_wl_data = wl_data
 
   total_data.each do |x|
-
     if x["home_score"] > x["away_score"]
       if x["home_team"] == "Patriots"
         total_wl_data["Patriots"][0][:wins] =  total_wl_data["Patriots"][0][:wins] + 1
@@ -96,13 +89,11 @@ def wins_loss_data
   end
 
   total_wl_data
-
   sorted_teams = {}
+
   total_wl_data.each do |k,v|
-
-  total = v[0][:wins] + v[0][:losses]
-  sorted_teams[total] = [k,v]
-
+    total = v[0][:wins] + v[0][:losses]
+    sorted_teams[total] = [k,v]
   end
 
   leaderboard_sorted = sorted_teams.sort_by {|k,v| k}.reverse
@@ -116,7 +107,6 @@ get '/' do
 end
 
 get '/leaderboard' do
-
   @entire_data = load_data
   @leaderboard_data = wins_loss_data
 
@@ -129,28 +119,8 @@ get '/leaderboard/:team' do
   @leaderboard_data = wins_loss_data
 
   @team_info = @team_names_data.find do |team|
-
     team[:team_name] == params[:team]
-
   end
 
   erb :teamprofile
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

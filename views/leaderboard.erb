@@ -9,9 +9,7 @@
 
 <body>
   <h1>Leader Board</h1>
-  <p><%= @entire_data %></p>
 
-  <p><%= @leaderboard_data %></p>
   <table>
     <thead>
       <tr>
@@ -21,17 +19,25 @@
       </tr>
     </thead>
     <tbody>
+
       <% @leaderboard_data.each do |k,v| %>
-      <tr>
-        <td>
-          <a href="<%= url("/leaderboard/#{v[0]}") %>">
-          <%= v[0] %>
-        </td>
-        <td><%= v[1][0][:wins] %></td>
-        <td><%= v[1][0][:losses].abs %></td>
-      </tr>
+        <tr>
+          <td>
+            <a href="<%= url("/leaderboard/#{v[0]}") %>">
+              <%= v[0] %>
+            </a>
+          </td>
+          <td>
+            <%= v[1][0][:wins] %>
+          </td>
+          <td>
+            <%= v[1][0][:losses].abs %>
+          </td>
+        </tr>
       <% end %>
+
     </tbody>
   </table>
+
 </body>
 </html>
