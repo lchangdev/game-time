@@ -1,3 +1,5 @@
+/* Global */
+
 body,
 table {
   font-family: "Times New Roman";
@@ -8,4 +10,50 @@ body {
   margin-left: 10%;
   margin-right: 10%;
   text-align: center;
+  padding-top: 1%;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 40px;
+}
+
+table th,
+table td {
+  width: 200px;
+  margin: 2%;
+  padding: 2%;
+  overflow: hidden;
+}
+
+span {
+  font-size: 100px;
+
+}
+
+/* Links */
+
+a {
+  text-decoration: none;
+}
+
+a:hover,
+.btn:hover {
+  color: tomato;
+}
+
+/* Buttons & Youtube */
+
+.youtube,
+.btn-container {
+  padding-top: 2%;
+}
+
+.btn {
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  text-decoration: none;
+  font-weight: 100;
 }

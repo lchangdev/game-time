@@ -22,14 +22,10 @@ def team_data
 end
 
 def wins_loss_data
-  total_data = []
   teams_data = []
   wl_data ={}
   total_wl_data = {}
-
-  CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
-    total_data << row.to_hash
-  end
+  sorted_teams = {}
 
   CSV.foreach('team_data.csv', headers: true, converters: :all) do |row|
   teams_data << row["home_team"]
@@ -43,53 +39,30 @@ def wins_loss_data
 
   total_wl_data = wl_data
 
-  total_data.each do |x|
-    if x["home_score"] > x["away_score"]
-      if x["home_team"] == "Patriots"
-        total_wl_data["Patriots"][0][:wins] =  total_wl_data["Patriots"][0][:wins] + 1
-      elsif x["home_team"] == "Broncos"
-        total_wl_data["Broncos"][0][:wins] =  total_wl_data["Broncos"][0][:wins] + 1
-      elsif x["home_team"] == "Colts"
-        total_wl_data["Colts"][0][:wins] =  total_wl_data["Colts"][0][:wins] + 1
-      elsif x["home_team"] == "Steelers"
-        total_wl_data["Steelers"][0][:wins] =  total_wl_data["Steelers"][0][:wins] + 1
-      end
+  load_data.each do |x|
 
-      if x["away_team"] == "Patriots"
-        total_wl_data["Patriots"][0][:losses] =  total_wl_data["Patriots"][0][:losses] - 1
-      elsif x["away_team"] == "Broncos"
-        total_wl_data["Broncos"][0][:losses] =  total_wl_data["Broncos"][0][:losses] - 1
-      elsif x["away_team"] == "Colts"
-        total_wl_data["Colts"][0][:losses] =  total_wl_data["Colts"][0][:losses] - 1
-      elsif x["away_team"] == "Steelers"
-        total_wl_data["Steelers"][0][:losses] =  total_wl_data["Steelers"][0][:losses] - 1
+    if x["home_score"] > x["away_score"]
+      total_wl_data.each do |k,v|
+        if x["home_team"] == k
+          v[0][:wins] = v[0][:wins] + 1
+        end
+
+        if x["away_team"] == k
+          v[0][:losses] = v[0][:losses] - 1
+        end
       end
     else
+      total_wl_data.each do |k,v|
+        if x["home_team"] == k
+          v[0][:losses] = v[0][:losses] - 1
+        end
 
-      if x["home_team"] == "Patriots"
-        total_wl_data["Patriots"][0][:losses] =  total_wl_data["Patriots"][0][:losses] - 1
-      elsif x["home_team"] == "Broncos"
-        total_wl_data["Broncos"][0][:losses] =  total_wl_data["Broncos"][0][:losses] - 1
-      elsif x["home_team"] == "Colts"
-        total_wl_data["Colts"][0][:losses] =  total_wl_data["Colts"][0][:losses] - 1
-      elsif x["home_team"] == "Steelers"
-        total_wl_data["Steelers"][0][:losses] =  total_wl_data["Steelers"][0][:losses] - 1
-      end
-
-      if x["away_team"] == "Patriots"
-        total_wl_data["Patriots"][0][:wins] =  total_wl_data["Patriots"][0][:wins] + 1
-      elsif x["away_team"] == "Broncos"
-        total_wl_data["Broncos"][0][:wins] =  total_wl_data["Broncos"][0][:wins] + 1
-      elsif x["away_team"] == "Colts"
-        total_wl_data["Colts"][0][:wins] =  total_wl_data["Colts"][0][:wins] + 1
-      elsif x["away_team"] == "Steelers"
-        total_wl_data["Steelers"][0][:wins] =  total_wl_data["Steelers"][0][:wins] + 1
+        if x["away_team"] == k
+          v[0][:wins] = v[0][:wins] + 1
+        end
       end
     end
   end
-
-  total_wl_data
-  sorted_teams = {}
 
   total_wl_data.each do |k,v|
     total = v[0][:wins] + v[0][:losses]
@@ -100,6 +73,8 @@ def wins_loss_data
   Hash[leaderboard_sorted]
 
 end
+
+# Get Requests
 
 get '/' do
 
@@ -115,8 +90,8 @@ end
 
 get '/leaderboard/:team' do
   @entire_data = load_data
-  @team_names_data = team_data
   @leaderboard_data = wins_loss_data
+  @team_names_data = team_data
 
   @team_info = @team_names_data.find do |team|
     team[:team_name] == params[:team]

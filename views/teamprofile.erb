@@ -4,11 +4,10 @@
 <head>
   <meta charset="utf-8">
   <title>Game Time</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
-
 <body>
-  <h3>Team Profile: <span><%= params[:team] %></span><h3>
+  <h3>Team Profile: <span><%= params[:team] %></span></h3>
   <table>
     <thead>
       <tr>
@@ -26,6 +25,9 @@
         <% end %>
       <% end %>
     </tbody>
+  </table>
+
+  <table>
     <thead>
       <tr>
         <th>Home Team</th>
@@ -47,5 +49,7 @@
       <% end %>
     </tbody>
   </table>
+  <br>
+  <a href='/leaderboard'>&lt;&lt;</a>
 </body>
 </html>
